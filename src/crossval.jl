@@ -190,5 +190,24 @@ function cross_validate(estfun::Function, evalfun::Function, n::Int, gen)
     return scores
 end
 
+function cross_validate_any(estfun::Function, evalfun::Function, n::Int, gen)
+    best_model = nothing
+    best_score = NaN
+    best_inds = Int[]
+    first = true
+
+    scores = []
+    for (i, train_inds) in enumerate(gen)
+        test_inds = setdiff(1:n, train_inds)
+        model = estfun(train_inds)
+        score = evalfun(model, test_inds)
+        push!(scores, score)
+    end
+    return scores
+end
+
 cross_validate(estfun::Function, evalfun::Function, n::Integer, gen) =
     cross_validate(estfun, evalfun, n, gen, Forward)
+
+cross_validate_any(estfun::Function, evalfun::Function, n::Integer, gen) =
+    cross_validate_any(estfun, evalfun, n, gen, Forward)
