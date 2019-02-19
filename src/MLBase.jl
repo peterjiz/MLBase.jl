@@ -43,6 +43,7 @@ module MLBase
     StratifiedRandomSub,    # stratified repeated random subsampling
 
     cross_validate,     # perform cross-validation
+    cross_validate_any,     # perform cross-validation (return any type for scores)
 
     # perfeval
     ROCNums,        # A class to capture ROC numbers
